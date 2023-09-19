@@ -265,14 +265,40 @@ high_profit_dep=high_profit_dep[high_profit_dep["Benefit_per_order"]>0]
 high_profit_dep["percentage"]=high_profit_dep["Benefit_per_order"]/sum(high_profit_dep["Benefit_per_order"])*100
 
 fig,ax=plt.subplots(figsize=(18,8))
-high_profit_dep.groupby("Customer_Segment").agg({"Benefit_per_order":"sum"}).sort_values("Benefit_per_order",ascending=False)[:10].plot(kind="bar",color='C5',ax=ax)
+high_profit_dep.groupby("Department_Name").agg({"percentage":"sum"}).sort_values("percentage",ascending=False)[:10].plot(kind="bar",color='C2',ax=ax)
 ax.bar_label(ax.containers[0],fontsize=20)
-plt.xlabel("Customer_Segment",fontsize=20)
-plt.ylabel("Benefit_per_order",fontsize=20)
+plt.xlabel("Department_Name",fontsize=20)
+plt.ylabel("percentage",fontsize=20)
 plt.xticks(fontsize=20)
 plt.yticks(fontsize=20)
 plt.title("Top Profitable customer segment ",fontsize=20)
 plt.show()
+
+
+####Which month the order volume is to high
+
+new.columns
+
+new["month"]=pd.to_datetime(new["order_date_(DateOrders)"])
+new["month"]=new["month"].dt.strftime("%b")
+
+order_month=new[["Order_Id","month"]]
+
+order_month.duplicated().sum()
+
+order_month=order_month.drop_duplicates(keep="first")
+
+order_count=order_month.groupby("month").agg({"Order_Id":"count"}).reset_index().sort_values("Order_Id",ascending=False)
+
+
+
+order_count["percentage"]=order_count["Order_Id"]/sum(order_count["Order_Id"])*100
+explode=[1.0,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1]
+plt.pie(order_count["percentage"],labels=order_count["month"],explode=explode,autopct="%2.1f%%")
+plt.xticks(fontsize=10)
+plt.title("Order volume based on month",fontsize=10)
+
+
 
 
 
