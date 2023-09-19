@@ -7,42 +7,30 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.impute import KNNImputer as knn
 
-
-#### The main focus to EDA of netflix dataset to get the insight of it.
-
-### Step invoive loading the dataset,Cleaning ,univeriety,biveriety and multivariety analysis.
-
-
 #### Loading the dataset
 
 df=pd.read_csv("C:/Users/Madhujit/Desktop/DataCoSupplyChainDataset.csv",encoding="ISO-8859-1")
-
-
-
 
 ## Checking the columns 
 
 df.columns
 
-### TOtal shape of the dataset
+### shape of the dataset
 
 df.shape
 
 ### checking the info of the dataset
-*0
 df.info()
  
 ### checking the null value in the dataset
 
-0
 df.isnull().sum()
 
 ### checking the duplicate value in the dataset
 
 df.duplicated().sum()
 
-
-### checking the outlier in the dataset
+### checking the outlier in the dataset 
 
 df.columns=df.columns.str.replace(" ","_")
 
@@ -75,8 +63,7 @@ new.isnull().sum()
 
 new.drop(["Customer_Lname","Customer_Zipcode","Order_Zipcode","Product_Description"],axis=1,inplace=True)
 
-###Checking null values
-
+###Checking null values again
 
 new.isnull().sum()
 
